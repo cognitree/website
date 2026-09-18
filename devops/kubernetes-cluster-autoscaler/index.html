@@ -1,0 +1,691 @@
+<!doctype html>
+<html dir="ltr" lang="en-US" prefix="og: https://ogp.me/ns#">
+<head><style>img.lazy{min-height:1px}</style><link href="../../wp-content/plugins/w3-total-cache/pub/js/lazyload.min.js" as="script">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<!-- Mobile Specific Metas & Favicons -->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"><link rel="shortcut icon" href="#" /><!-- WordPress Stuff -->
+<title>Kubernetes cluster autoscaler | cognitree</title>
+                        <!-- All in One SEO 5.0.1.1 - aioseo.com -->
+	<meta name="robots" content="max-image-preview:large" />
+	<meta name="author" content="Cognitree"/>
+	<link rel="canonical" href="../../devops/kubernetes-cluster-autoscaler/index.html" />
+	<meta name="generator" content="All in One SEO (AIOSEO) 5.0.1.1" />
+		<meta property="og:locale" content="en_US" />
+		<meta property="og:site_name" content="cognitree | Engineered to scale" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Kubernetes cluster autoscaler | cognitree" />
+		<meta property="article:published_time" content="2020-04-13T11:07:48+00:00" />
+		<meta property="article:modified_time" content="2020-11-25T02:19:34+00:00" />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:site" content="@cognitree" />
+		<meta name="twitter:title" content="Kubernetes cluster autoscaler | cognitree" />
+		<meta name="twitter:creator" content="@cognitree" />
+		<!-- All in One SEO -->
+
+<link rel='dns-prefetch' href='../../index.html' />
+<style id='wp-img-auto-sizes-contain-inline-css' type='text/css'>
+img:is([sizes=auto i],[sizes^="auto," i]){contain-intrinsic-size:3000px 1500px}
+/*# sourceURL=wp-img-auto-sizes-contain-inline-css */
+</style>
+<style id='wp-emoji-styles-inline-css' type='text/css'>
+
+	img.wp-smiley, img.emoji {
+		display: inline !important;
+		border: none !important;
+		box-shadow: none !important;
+		height: 1em !important;
+		width: 1em !important;
+		margin: 0 0.07em !important;
+		vertical-align: -0.1em !important;
+		background: none !important;
+		padding: 0 !important;
+	}
+/*# sourceURL=wp-emoji-styles-inline-css */
+</style>
+<style id='wp-block-library-inline-css' type='text/css'>
+:root{--wp-block-synced-color:#7a00df;--wp-block-synced-color--rgb:122,0,223;--wp-bound-block-color:var(--wp-block-synced-color);--wp-editor-canvas-background:#ddd;--wp-admin-theme-color:#007cba;--wp-admin-theme-color--rgb:0,124,186;--wp-admin-theme-color-darker-10:#006ba1;--wp-admin-theme-color-darker-10--rgb:0,107,160.5;--wp-admin-theme-color-darker-20:#005a87;--wp-admin-theme-color-darker-20--rgb:0,90,135;--wp-admin-border-width-focus:2px}@media (min-resolution:192dpi){:root{--wp-admin-border-width-focus:1.5px}}.wp-element-button{cursor:pointer}:root .has-very-light-gray-background-color{background-color:#eee}:root .has-very-dark-gray-background-color{background-color:#313131}:root .has-very-light-gray-color{color:#eee}:root .has-very-dark-gray-color{color:#313131}:root .has-vivid-green-cyan-to-vivid-cyan-blue-gradient-background{background:linear-gradient(135deg,#00d084,#0693e3)}:root .has-purple-crush-gradient-background{background:linear-gradient(135deg,#34e2e4,#4721fb 50%,#ab1dfe)}:root .has-hazy-dawn-gradient-background{background:linear-gradient(135deg,#faaca8,#dad0ec)}:root .has-subdued-olive-gradient-background{background:linear-gradient(135deg,#fafae1,#67a671)}:root .has-atomic-cream-gradient-background{background:linear-gradient(135deg,#fdd79a,#004a59)}:root .has-nightshade-gradient-background{background:linear-gradient(135deg,#330968,#31cdcf)}:root .has-midnight-gradient-background{background:linear-gradient(135deg,#020381,#2874fc)}:root{--wp--preset--font-size--normal:16px;--wp--preset--font-size--huge:42px}.has-regular-font-size{font-size:1em}.has-larger-font-size{font-size:2.625em}.has-normal-font-size{font-size:var(--wp--preset--font-size--normal)}.has-huge-font-size{font-size:var(--wp--preset--font-size--huge)}.has-text-align-center{text-align:center}.has-text-align-left{text-align:left}.has-text-align-right{text-align:right}.has-fit-text{white-space:nowrap!important}#end-resizable-editor-section{display:none}.aligncenter{clear:both}.items-justified-left{justify-content:flex-start}.items-justified-center{justify-content:center}.items-justified-right{justify-content:flex-end}.items-justified-space-between{justify-content:space-between}.screen-reader-text{border:0;clip-path:inset(50%);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px;word-wrap:normal!important}.screen-reader-text:focus{background-color:#ddd;clip-path:none;color:#444;display:block;font-size:1em;height:auto;left:5px;line-height:normal;padding:15px 23px 14px;text-decoration:none;top:5px;width:auto;z-index:100000}html :where(.has-border-color){border-style:solid}html :where([style*=border-top-color]){border-top-style:solid}html :where([style*=border-right-color]){border-right-style:solid}html :where([style*=border-bottom-color]){border-bottom-style:solid}html :where([style*=border-left-color]){border-left-style:solid}html :where([style*=border-width]){border-style:solid}html :where([style*=border-top-width]){border-top-style:solid}html :where([style*=border-right-width]){border-right-style:solid}html :where([style*=border-bottom-width]){border-bottom-style:solid}html :where([style*=border-left-width]){border-left-style:solid}html :where(img[class*=wp-image-]){height:auto;max-width:100%}:where(figure){margin:0 0 1em}html :where(.is-position-sticky){--wp-admin--admin-bar--position-offset:var(--wp-admin--admin-bar--height,0px)}@media screen and (max-width:600px){html :where(.is-position-sticky){--wp-admin--admin-bar--position-offset:0px}}
+
+/*# sourceURL=wp-block-library-inline-css */
+</style>
+<style id='classic-theme-styles-inline-css' type='text/css'>
+/*! This file is auto-generated */
+.wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}.wp-block-file__button{background:#32373c;color:#fff;text-decoration:none}
+/*# sourceURL=/wp-includes/css/classic-themes.min.css */
+</style>
+<link rel="stylesheet" href="../../wp-content/cache/minify/057ec.css" media="all" />
+
+<style id='global-styles-inline-css' type='text/css'>
+:root{--wp--preset--aspect-ratio--square: 1;--wp--preset--aspect-ratio--4-3: 4/3;--wp--preset--aspect-ratio--3-4: 3/4;--wp--preset--aspect-ratio--3-2: 3/2;--wp--preset--aspect-ratio--2-3: 2/3;--wp--preset--aspect-ratio--16-9: 16/9;--wp--preset--aspect-ratio--9-16: 9/16;--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgb(6,147,227) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgb(252,185,0) 0%,rgb(255,105,0) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgb(255,105,0) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgb(255, 255, 255), 6px 6px rgb(0, 0, 0);--wp--preset--shadow--crisp: 6px 6px 0px rgb(0, 0, 0);}:where(.is-layout-flex){gap: 0.5em;}:where(.is-layout-grid){gap: 0.5em;}body .is-layout-flex{display: flex;}.is-layout-flex{flex-wrap: wrap;align-items: center;}.is-layout-flex > :is(*, div){margin: 0;}body .is-layout-grid{display: grid;}.is-layout-grid > :is(*, div){margin: 0;}:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+/*# sourceURL=global-styles-inline-css */
+</style>
+
+<link rel="stylesheet" href="../../wp-content/cache/minify/edd85.css" media="all" />
+
+<style id='rs-plugin-settings-inline-css' type='text/css'>
+#rs-demo-id {}
+/*# sourceURL=rs-plugin-settings-inline-css */
+</style>
+<link rel="stylesheet" href="../../wp-content/cache/minify/8931a.css" media="all" />
+
+
+
+
+<script src="../../wp-content/cache/minify/c643a.js"></script>
+
+
+
+
+<link rel="alternate" title="JSON" type="application/json" href="../../wp-json/wp/v2/posts/1928" /><meta name="generator" content="WordPress 6.9.8" />
+<link rel='shortlink' href='./' />
+<style type="text/css">
+body{ font: 400 15px Verdana, Geneva, sans-serif, Arial, Helvetica, sans-serif; color: #000000; line-height: 1.9;} .wrapall, .boxed-layout{ background-color: #ffffff; } body.page-template-page-blank-php{ background: #ffffff !important; } h1, .title-h1{ font: 28px Verdana, Geneva, sans-serif, Arial, Helvetica, sans-serif; color: #333333; } h2{ font: 24px Verdana, Geneva, sans-serif, Arial, Helvetica, sans-serif; color: #333333; } h3{ font: 20px Verdana, Geneva, sans-serif, Arial, Helvetica, sans-serif; color: #333333; } h4{ font: 16px Verdana, Geneva, sans-serif, Arial, Helvetica, sans-serif; color: #333333; } h5{ font: 16px Verdana, Geneva, sans-serif, Arial, Helvetica, sans-serif; color: #333333; } h6{ font: 16px Verdana, Geneva, sans-serif, Arial, Helvetica, sans-serif; color: #333333; } .title{ font-family: 'Verdana, Geneva, sans-serif', Arial, Helvetica, sans-serif; } h1 a, h2 a, h3 a, h4 a, h5 a, h6 a { font-weight: inherit; color: inherit; } h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover, a:hover h1, a:hover h2, a:hover h3, a:hover h4, a:hover h5, a:hover h6 { color: #1e73be; } a{ color: #1a73e8; } a:hover{ color: #1e73be; } input[type='text'], input[type='password'], input[type='email'], input[type='tel'], input[type='date'], input[type='number'], textarea, select { font-family: Verdana, Geneva, sans-serif, Arial, Helvetica, sans-serif; font-size: 15px; } #sidebar .widget h3{ font: 14px Montserrat, Arial, Helvetica, sans-serif; color: #444444; } .container .twelve.alt.sidebar-right, .container .twelve.alt.sidebar-left, #sidebar.sidebar-right #sidebar-widgets, #sidebar.sidebar-left #sidebar-widgets{ border-color: #efefef;} #topbar{ background: #f5f5f5; color: #777777; } #topbar a{ color: #999999; } #topbar a:hover{ color: #333333; } @media only screen and (max-width: 767px) { #topbar .topbar-col1{ background: #f5f5f5; } } /* Navigation */ #navigation > ul > li > a{ font: 15px Verdana, Geneva, sans-serif, Arial, Helvetica, sans-serif; color: #1a73e8; } #navigation > ul > li:hover > a, #navigation > ul > li > a:hover { color: #1e73be; } #navigation li.current-menu-item > a:hover, #navigation li.current-page-ancestor > a:hover, #navigation li.current-menu-ancestor > a:hover, #navigation li.current-menu-parent > a:hover, #navigation li.current_page_ancestor > a:hover, #navigation > ul > li.sfHover > a { color: #1e73be; } #navigation li.current-menu-item > a, #navigation li.current-page-ancestor > a, #navigation li.current-menu-ancestor > a, #navigation li.current-menu-parent > a, #navigation li.current_page_ancestor > a { color: #000000; } #navigation ul li:hover{ border-color: #1e73be; } #navigation li.current-menu-item, #navigation li.current-page-ancestor, #navigation li.current-menu-ancestor, #navigation li.current-menu-parent, #navigation li.current_page_ancestor{ border-color: #000000; } #navigation .sub-menu{ background: #ffffff; } #navigation .sub-menu li a{ font: 14px Verdana, Geneva, sans-serif, Arial, Helvetica, sans-serif; color: #1a73e8; } #navigation .sub-menu li a:hover{ color: #1e73be; } #navigation .sub-menu li.current_page_item > a, #navigation .sub-menu li.current_page_item > a:hover, #navigation .sub-menu li.current-menu-item > a, #navigation .sub-menu li.current-menu-item > a:hover, #navigation .sub-menu li.current-page-ancestor > a, #navigation .sub-menu li.current-page-ancestor > a:hover, #navigation .sub-menu li.current-menu-ancestor > a, #navigation .sub-menu li.current-menu-ancestor > a:hover, #navigation .sub-menu li.current-menu-parent > a, #navigation .sub-menu li.current-menu-parent > a:hover, #navigation .sub-menu li.current_page_ancestor > a, #navigation .sub-menu li.current_page_ancestor > a:hover{ color: #1e73be; } #navigation .sub-menu li a, #navigation .sub-menu ul li a{ border-color: #ffffff; } #navigation > ul > li.megamenu > ul.sub-menu{ background: #ffffff; border-color: #1e73be; } #navigation > ul > li.megamenu > ul > li { border-right-color: #ffffff !important; } #navigation > ul > li.megamenu ul li a{ color:#1a73e8; } #navigation > ul > li.megamenu > ul > li > a { color:#ffffff; } #navigation > ul > li.megamenu > ul ul li a:hover, #header #navigation > ul > li.megamenu > ul ul li.current-menu-item a { color: #1e73be !important; background-color: #333333 !important; } /* Header General */ #search-btn, #shopping-btn, #close-search-btn { color: #bbbbbb; } #search-btn:hover, #shopping-btn:hover, #close-search-btn:hover { color: #999999; } #slogan{ font: 400 20px Open Sans, Arial, Helvetica, sans-serif; color: #777777; margin-top: 26px; } /* Mobile Header */ #mobile-navigation{ background: #ffffff; } #mobile-navigation ul li a{ font: 14px Verdana, Geneva, sans-serif, Arial, Helvetica, sans-serif; color: #1a73e8; border-bottom-color: #ffffff !important; } #mobile-navigation ul li a:hover, #mobile-navigation ul li a:hover [class^='fa-'], #mobile-navigation li.open > a, #mobile-navigation ul li.current-menu-item > a, #mobile-navigation ul li.current-menu-ancestor > a{ color: #1e73be; } body #mobile-navigation li.open > a [class^='fa-']{ color: #1e73be; } #mobile-navigation form, #mobile-navigation form input{ background: #444444; color: #cccccc; } #mobile-navigation form:before{ color: #cccccc; } #mobile-header{ background: #ffffff; height: 54px; } #mobile-navigation-btn, #mobile-cart-btn, #mobile-shopping-btn{ color: #bbbbbb; line-height: 54px; } #mobile-navigation-btn:hover, #mobile-cart-btn:hover, #mobile-shopping-btn:hover { color: #999999; } #mobile-header .logo{ margin-top: 8px; } /* Header V1 */ #header.header-v1 { height: 54px; background: #ffffff; } .header-v1 .logo{ margin-top: 8px; } .header-v1 #navigation > ul > li{ height: 54px; padding-top: 21px; } .header-v1 #navigation .sub-menu{ top: 54px; } .header-v1 .header-icons-divider{ line-height: 54px; background: #efefef; } #header.header-v1 .widget_shopping_cart{ top: 54px; } .header-v1 #search-btn, .header-v1 #close-search-btn, .header-v1 #shopping-btn{ line-height: 54px; } .header-v1 #search-top, .header-v1 #search-top input{ height: 54px; } .header-v1 #search-top input{ color: #666666; font-family: Verdana, Geneva, sans-serif, Arial, Helvetica, sans-serif; } /* Header V3 */ #header.header-v3 { background: #ffffff; } .header-v3 .navigation-wrap{ background: #ffffff; border-top: 1px solid #efefef; } .header-v3 .logo { margin-top: 30px; margin-bottom: 30px; } /* Header V4 */ #header.header-v4 { background: #ffffff; } .header-v4 .navigation-wrap{ background: #ffffff; border-top: 1px solid #efefef; } .header-v4 .logo { margin-top: 30px; margin-bottom: 30px; } /* Transparent Header */ #transparentimage{ padding: 54px 0 0 0; } .header-is-transparent #mobile-navigation{ top: 54px; } /* Stuck */ .stuck{ background: #ffffff; } /* Titlebars */ .titlebar h1, .title-h1{ font: 22px Open Sans, Arial, Helvetica, sans-serif; color: #777777; } #fulltitle{ background: #f9f9f9; border-bottom: 1px solid #efefef; } #breadcrumbs{ margin-top: 6px; } #breadcrumbs, #breadcrumbs a{ font: 13px Open Sans, Arial, Helvetica, sans-serif; color: #aaaaaa; } #breadcrumbs a:hover{ color: #666666; } #fullimagecenter h1, #transparentimage h1, #fullimagecenter .title-h1, #transparentimage .title-h1{ font: 42px Verdana, Geneva, sans-serif, Arial, Helvetica, sans-serif; color: #000000; text-transform: none; letter-spacing: 1px; text-align: center; } /* Footer */ #footer .widget h3{ font: 13px Montserrat, Arial, Helvetica, sans-serif; color: #ffffff; } #footer{ color: #888888; border-top: 4px none #1cbac8; } #footer{ background-color: #262626; } #footer a, #footer .widget ul li:after { color: #888888; } #footer a:hover, #footer .widget ul li:hover:after { color: #ffffff; } #footer .widget ul li{ border-bottom-color: #333333; } /* Copyright */ #copyright{ background: #ffffff; color: #000000; } #copyright a { color: #1a73e8; } #copyright a:hover { color: #1e73be; } /* Color Accent */ .highlight{color:#1a73e8 !important;} ::selection{ background: #1a73e8; } ::-moz-selection { background: #1a73e8; } #shopping-btn span{background:#1a73e8;} .blog-page .post h1 a:hover,.blog-page .post h2 a:hover{color:#1a73e8;} .entry-image .entry-overlay{background:#1a73e8;} .entry-quote a:hover{background:#1a73e8;} .entry-link a:hover{background:#1a73e8;} .blog-single .entry-tags a:hover{color:#1a73e8;} .sharebox ul li a:hover{color:#1a73e8;} .commentlist li.bypostauthor .comment-text{border-color: #1a73e8;} #pagination .current a{background:#1a73e8;} #filters ul li a:hover{color:#1a73e8;} #filters ul li a.active{color:#1a73e8;} #back-to-top a:hover{background-color:#1a73e8;} #sidebar .widget ul li a:hover{color:#1a73e8;} #sidebar .widget ul li:hover:after{color:#1a73e8;} .widget_tag_cloud a:hover,.widget_product_tag_cloud a:hover{background:#1a73e8;border-color:#1a73e8;} .widget_portfolio .portfolio-widget-item .portfolio-overlay{background:#1a73e8;} #sidebar .widget_nav_menu ul li a:hover{color:#1a73e8;} #footer .widget_tag_cloud a:hover,#footer .widget_product_tag_cloud a:hover{background:#1a73e8;border-color:#1a73e8;} /* Shortcodes */ .box.style-2{border-top-color:#1a73e8;} .box.style-4{border-color:#1a73e8;} .box.style-6{background:#1a73e8;} a.button,input[type=submit],button,.minti_button{background:#1a73e8;border-color:#1a73e8;} a.button.color-2{color:#1a73e8;border-color:#1a73e8;} a.button.color-3{background:#1a73e8;border-color:#1a73e8;} a.button.color-9{color:#1a73e8;} a.button.color-6:hover{background:#1a73e8;border-color:#1a73e8;} a.button.color-7:hover{background:#1a73e8;border-color:#1a73e8;} .counter-number{color:#1a73e8;} .divider-title.align-center:after, .divider-title.align-left:after { background-color:#1a73e8 } .divider5{border-bottom-color:#1a73e8;} .dropcap.dropcap-circle{background-color:#1a73e8;} .dropcap.dropcap-box{background-color:#1a73e8;} .dropcap.dropcap-color{color:#1a73e8;} .toggle .toggle-title.active, .color-light .toggle .toggle-title.active{ background:#1a73e8; border-color: #1a73e8;} .iconbox-style-1.icon-color-accent i.boxicon,.iconbox-style-2.icon-color-accent i.boxicon,.iconbox-style-3.icon-color-accent i.boxicon,.iconbox-style-8.icon-color-accent i.boxicon,.iconbox-style-9.icon-color-accent i.boxicon{color:#1a73e8!important;} .iconbox-style-4.icon-color-accent i.boxicon,.iconbox-style-5.icon-color-accent i.boxicon,.iconbox-style-6.icon-color-accent i.boxicon,.iconbox-style-7.icon-color-accent i.boxicon,.flip .icon-color-accent.card .back{background:#1a73e8;} .latest-blog .blog-item .blog-overlay{background:#1a73e8;} .latest-blog .blog-item .blog-pic i{color:#1a73e8;} .latest-blog .blog-item h4 a:hover{color:#1a73e8;} .progressbar .progress-percentage{background:#1a73e8;} .wpb_widgetised_column .widget ul li a:hover{color:#1a73e8;} .wpb_widgetised_column .widget ul li:hover:after{color:#1a73e8;} .wpb_accordion .wpb_accordion_wrapper .ui-state-active .ui-icon{background-color:#1a73e8;} .wpb_accordion .wpb_accordion_wrapper .ui-state-active.wpb_accordion_header a{color:#1a73e8;} .wpb_accordion .wpb_accordion_wrapper .wpb_accordion_header a:hover,.wpb_accordion .wpb_accordion_wrapper .wpb_accordion_header a:hover .ui-state-default .ui-icon{color:#1a73e8;} .wpb_accordion .wpb_accordion_wrapper .wpb_accordion_header:hover .ui-icon{background-color:#1a73e8!important;} .wpb_content_element.wpb_tabs .wpb_tabs_nav li.ui-tabs-active{border-bottom-color:#1a73e8;} .portfolio-item h4 a:hover{ color: #1a73e8; } .portfolio-filters ul li a:hover { color: #1a73e8; } .portfolio-filters ul li a.active { color: #1a73e8; } .portfolio-overlay-icon .portfolio-overlay{ background: #1a73e8; } .portfolio-overlay-icon i{ color: #1a73e8; } .portfolio-overlay-effect .portfolio-overlay{ background: #1a73e8; } .portfolio-overlay-name .portfolio-overlay{ background: #1a73e8; } .portfolio-detail-attributes ul li a:hover{ color: #1a73e8; } a.catimage:hover .catimage-text{ background: #1a73e8; } /* WooCommerce */ .products li h3{font: 400 15px Verdana, Geneva, sans-serif, Arial, Helvetica, sans-serif; color: #000000;} .woocommerce .button.checkout-button{background:#1a73e8;border-color:#1a73e8;} .woocommerce .products .onsale{background:#1a73e8;} .product .onsale{background:#1a73e8;} button.single_add_to_cart_button:hover{background:#1a73e8;} .woocommerce-tabs > ul > li.active a{color:#1a73e8;border-bottom-color:#1a73e8;} p.stars a:hover{background:#1a73e8;} p.stars a.active,p.stars a.active:after{background:#1a73e8;} .product_list_widget a{color:#1a73e8;} .woocommerce .widget_layered_nav li.chosen a{color:#1a73e8!important;} .woocommerce .widget_product_categories > ul > li.current-cat > a{color:#1a73e8!important;} .woocommerce .widget_product_categories > ul > li.current-cat:after{color:#1a73e8!important;} .woocommerce-message{ background: #1a73e8; } .bbp-topics-front ul.super-sticky .bbp-topic-title:before, .bbp-topics ul.super-sticky .bbp-topic-title:before, .bbp-topics ul.sticky .bbp-topic-title:before, .bbp-forum-content ul.sticky .bbp-topic-title:before{color: #1a73e8!important; } #subscription-toggle a:hover{ background: #1a73e8; } .bbp-pagination-links span.current{ background: #1a73e8; } div.wpcf7-mail-sent-ok,div.wpcf7-mail-sent-ng,div.wpcf7-spam-blocked,div.wpcf7-validation-errors{ background: #1a73e8; } .wpcf7-not-valid{ border-color: #1a73e8 !important;} .products .button.add_to_cart_button{ color: #1a73e8!important; } .minti_list.color-accent li:before{ color: #1a73e8!important; } .blogslider_text .post-categories li a{ background-color: #1a73e8; } .minti_zooming_slider .flex-control-nav li .minti_zooming_slider_ghost { background-color: #1a73e8; } .minti_carousel.pagination_numbers .owl-dots .owl-dot.active{ background-color: #1a73e8; } .wpb_content_element.wpb_tour .wpb_tabs_nav li.ui-tabs-active, .color-light .wpb_content_element.wpb_tour .wpb_tabs_nav li.ui-tabs-active{ background-color: #1a73e8; } .masonry_icon i{ color: #1a73e8; } .woocommerce-MyAccount-navigation-link.is-active a{ color: #1a73e8;} /* Special Font */ .font-special, .button, .counter-title, h6, .wpb_accordion .wpb_accordion_wrapper .wpb_accordion_header a, .pricing-plan .pricing-plan-head h3, a.catimage, .divider-title, button, input[type='submit'], input[type='reset'], input[type='button'], .vc_pie_chart h4, .page-404 h3, .minti_masonrygrid_item h4{ font-family: 'Montserrat', Arial, Helvetica, sans-serif; /*letter-spacing: 0px; font-weight: ;*/} .ui-helper-reset{ line-height: 1.9; } /* User CSS from Theme Options */ @media only screen and (max-width: 959px) { #header, .sticky-wrapper{display:none;} #mobile-header{display:inherit} }
+</style><meta name="generator" content="Powered by WPBakery Page Builder - drag and drop page builder for WordPress."/>
+<meta name="generator" content="Powered by Slider Revolution 6.1.8 - responsive, Mobile-Friendly Slider Plugin for WordPress with comfortable drag and drop interface." />
+<link rel="icon" href="../../wp-content/uploads/2020/04/cropped-logo_blue_transparent_300x-32x32.png" sizes="32x32" />
+<link rel="icon" href="../../wp-content/uploads/2020/04/cropped-logo_blue_transparent_300x-192x192.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="../../wp-content/uploads/2020/04/cropped-logo_blue_transparent_300x-180x180.png" />
+<meta name="msapplication-TileImage" content="../../wp-content/uploads/2020/04/cropped-logo_blue_transparent_300x-270x270.png" />
+<script type="text/javascript">function setREVStartSize(e){			
+			try {								
+				var pw = document.getElementById(e.c).parentNode.offsetWidth,
+					newh;
+				pw = pw===0 || isNaN(pw) ? window.innerWidth : pw;
+				e.tabw = e.tabw===undefined ? 0 : parseInt(e.tabw);
+				e.thumbw = e.thumbw===undefined ? 0 : parseInt(e.thumbw);
+				e.tabh = e.tabh===undefined ? 0 : parseInt(e.tabh);
+				e.thumbh = e.thumbh===undefined ? 0 : parseInt(e.thumbh);
+				e.tabhide = e.tabhide===undefined ? 0 : parseInt(e.tabhide);
+				e.thumbhide = e.thumbhide===undefined ? 0 : parseInt(e.thumbhide);
+				e.mh = e.mh===undefined || e.mh=="" || e.mh==="auto" ? 0 : parseInt(e.mh,0);		
+				if(e.layout==="fullscreen" || e.l==="fullscreen") 						
+					newh = Math.max(e.mh,window.innerHeight);				
+				else{					
+					e.gw = Array.isArray(e.gw) ? e.gw : [e.gw];
+					for (var i in e.rl) if (e.gw[i]===undefined || e.gw[i]===0) e.gw[i] = e.gw[i-1];					
+					e.gh = e.el===undefined || e.el==="" || (Array.isArray(e.el) && e.el.length==0)? e.gh : e.el;
+					e.gh = Array.isArray(e.gh) ? e.gh : [e.gh];
+					for (var i in e.rl) if (e.gh[i]===undefined || e.gh[i]===0) e.gh[i] = e.gh[i-1];
+										
+					var nl = new Array(e.rl.length),
+						ix = 0,						
+						sl;					
+					e.tabw = e.tabhide>=pw ? 0 : e.tabw;
+					e.thumbw = e.thumbhide>=pw ? 0 : e.thumbw;
+					e.tabh = e.tabhide>=pw ? 0 : e.tabh;
+					e.thumbh = e.thumbhide>=pw ? 0 : e.thumbh;					
+					for (var i in e.rl) nl[i] = e.rl[i]<window.innerWidth ? 0 : e.rl[i];
+					sl = nl[0];									
+					for (var i in nl) if (sl>nl[i] && nl[i]>0) { sl = nl[i]; ix=i;}															
+					var m = pw>(e.gw[ix]+e.tabw+e.thumbw) ? 1 : (pw-(e.tabw+e.thumbw)) / (e.gw[ix]);					
+
+					newh =  (e.type==="carousel" && e.justify==="true" ? e.gh[ix] : (e.gh[ix] * m)) + (e.tabh + e.thumbh);
+				}			
+				
+				if(window.rs_init_css===undefined) window.rs_init_css = document.head.appendChild(document.createElement("style"));					
+				document.getElementById(e.c).height = newh;
+				window.rs_init_css.innerHTML += "#"+e.c+"_wrapper { height: "+newh+"px }";				
+			} catch(e){
+				console.log("Failure at Presize of Slider:" + e)
+			}					   
+		  };</script>
+<noscript><style> .wpb_animate_when_almost_visible { opacity: 1; }</style></noscript></head>
+
+<body class="wp-singular post-template-default single single-post postid-1928 single-format-standard wp-theme-unicon smooth-scroll wpb-js-composer js-comp-ver-6.2.0 vc_responsive" itemscope itemtype="https://schema.org/WebPage">
+
+	<div class="site-wrapper wrapall">
+
+	
+<header id="header" class="header header-v1 header-v1-only clearfix  ">
+		
+	<div class="header-wide-container">
+	
+		<div id="logo-navigation" class="sixteen columns">
+			
+			<div id="logo" class="logo">
+									<a href="../../index.html"><img src="../../wp-content/uploads/2018/07/logo-162x42-1.png" data-src="../../wp-content/uploads/2018/07/logo-162x42-1.png" alt="cognitree" class="logo_standard lazy" /></a>
+										<a href="../../index.html"><img src="../../wp-content/uploads/2020/06/retina-logo-324x83-1.png" data-src="../../wp-content/uploads/2020/06/retina-logo-324x83-1.png" width="162" height="42" alt="cognitree" class="logo_retina lazy" /></a>												</div>
+
+			<div id="navigation" class="clearfix">			
+				<div class="header-icons">
+												
+								</div>	
+
+				<ul id="nav" class="menu"><li id="menu-item-1959" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-1959"><a>Services</a>
+<ul class="sub-menu">
+	<li id="menu-item-1963" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1963"><a href="../../cloud/index.html">Cloud</a></li>
+	<li id="menu-item-1962" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1962"><a href="../../analytics/index.html">Analytics</a></li>
+	<li id="menu-item-1961" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1961"><a href="../../devops/index.html">DevOps</a></li>
+</ul>
+</li>
+<li id="menu-item-1965" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1965"><a href="../../projects/index.html">Projects</a></li>
+<li id="menu-item-1964" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1964"><a href="../../solutions/index.html">Solutions</a></li>
+<li id="menu-item-1960" class="menu-item menu-item-type-post_type menu-item-object-page current_page_parent menu-item-1960"><a href="../../blog/index.html">Blog</a></li>
+</ul>			</div>
+			
+		</div>
+		
+		
+			
+
+	</div>	
+	
+</header>
+
+<div id="mobile-header" class="mobile-header-v1">
+	<div class="container">
+		<div class="sixteen columns">
+			<div id="mobile-logo" class="logo">
+									<a href="../../index.html"><img src="../../wp-content/uploads/2018/07/logo-162x42-1.png" data-src="../../wp-content/uploads/2018/07/logo-162x42-1.png" alt="cognitree" class="logo_standard lazy" /></a>
+					<a href="../../index.html"><img src="../../wp-content/uploads/2020/06/retina-logo-324x83-1.png" data-src="../../wp-content/uploads/2020/06/retina-logo-324x83-1.png" width="162" height="42" alt="cognitree" class="logo_retina lazy" /></a>							</div>
+			<a href="#" id="mobile-navigation-btn"><i class="fa fa-bars"></i></a>
+					</div>
+	</div>
+</div>
+
+<div id="mobile-navigation">
+	<div class="container">
+		<div class="sixteen columns">
+			<div class="menu-top-header-container"><ul id="mobile-nav" class="menu"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-1959"><a>Services</a>
+<ul class="sub-menu">
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1963"><a href="../../cloud/index.html">Cloud</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1962"><a href="../../analytics/index.html">Analytics</a></li>
+	<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1961"><a href="../../devops/index.html">DevOps</a></li>
+</ul>
+</li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1965"><a href="../../projects/index.html">Projects</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1964"><a href="../../solutions/index.html">Solutions</a></li>
+<li class="menu-item menu-item-type-post_type menu-item-object-page current_page_parent menu-item-1960"><a href="../../blog/index.html">Blog</a></li>
+</ul></div>			
+				
+		</div>
+	</div>
+</div>
+
+		
+			
+					<div id="notitlebar"></div>
+		
+
+
+<div id="page-wrap" class="blog-page blog-single container">
+	
+	<div id="content" class="sixteen columns">
+	
+					
+			<div id="post-1928" class="post-wrap clearfix post-1928 post type-post status-publish format-standard hentry category-devops tag-amazon-eks tag-autoscale tag-kubernetes">
+    
+    <div class="post-time">
+        <span class="month">Apr</span>
+        <span class="day">13</span>
+    </div>
+
+    <article>
+        
+                                    
+        <div class="entry-wrap">
+
+            <div class="entry-title">
+                                    <h1><a href="../../devops/kubernetes-cluster-autoscaler/index.html" title="Permalink to Kubernetes cluster autoscaler" rel="bookmark">Kubernetes cluster autoscaler</a></h1>
+                            </div>
+
+                        <div class="entry-meta">
+                <ul>
+								<li class="meta-category"><a href="../../category/devops/index.html" rel="category tag">DevOps</a></li>
+		</ul>
+            </div>
+            
+            <div class="entry-content">
+                                    <p style="text-align: left;"><span style="font-weight: 400;">This blog shows how we leveraged the </span><span style="font-weight: 400;">Kubernetes cluster autoscaler</span><span style="font-weight: 400;"> with </span><span style="font-weight: 400;">Amazon EKS</span><span style="font-weight: 400;"> service in order to build a cost effective solution for an on-demand deployment of microservices in a dynamically scaling environment. This blog along with a detailed explanation of the use case also provides a step-by-step guide to enable the cluster autoscaler in an existing kubernetes cluster on AWS.</span></p>
+<h2 style="text-align: left;"><span style="font-weight: 400;">Use Case</span></h2>
+<p style="text-align: left;"><span style="font-weight: 400;">In one of our recent customer engagements, we were entrusted with hosting the customer’s flagship product as a self-service SaaS solution. The product was initially designed for an on-premise deployment. As the product traction increased, our customer needed a quick and simple setup for encouraging their prospects to experience their product features before engaging fully.</span></p>
+<p style="text-align: left;"><span style="font-weight: 400;">We at Cognitree have addressed such requirements for several of our customers. We have provided the solution architecture and also helped implement the solution and deploy them on the customer infrastructure. </span><span style="font-weight: 400;">In most of such use cases these are some of the common constraints :</span></p>
+<ol style="text-align: left;">
+<li style="font-weight: 400;"><span style="font-weight: 400;">Self-service: The user signup and setup process should be completely automated with no human intervention</span></li>
+<li style="font-weight: 400;"><span style="font-weight: 400;">Robust setup: Build a simple deployment procedure that is easy to build and test. Also, ability to get the user going with the trial deployment in the matter of a few mins from the time the user signed up.</span></li>
+<li style="font-weight: 400;"><span style="font-weight: 400;">Cost Optimization: Optimize for costs. Cap the costs incurred per trial signup</span></li>
+<li style="font-weight: 400;"><span style="font-weight: 400;">Observability: Enable business owners to get complete visibility of the trials including usage patterns and costs. Also, enable operations to continuously assess the deployments to ensure reliable and smooth experience of the product. </span></li>
+</ol>
+<p style="text-align: left;"><span style="font-weight: 400;">The trial deployment had to be set up on-demand whenever a user signed up and the lifetime of a trial deployment lasted for a week or so. On expiry of the trial, the resources allocated for the deployment had to be reclaimed. To cater to such elastic infrastructure needs, we decided to leverage a cloud infrastructure such as Amazon AWS. Amazon AWS is the leading provider of cloud infrastructure and we have successfully launched solutions on it for a lot of our customers in the past. So it was our natural choice.</span></p>
+<p style="text-align: left;"><span style="font-weight: 400;">Kubernetes addresses a couple of the challenges easily. Ensuring optimal resource utilization, managing service discovery between the micro services and also exposing few services to external communication. Kubernetes also brings in a rich collection of deployment patterns, constructs, integrations and best practices that together help to deploy, manage and scale containerized applications.</span></p>
+<p style="text-align: left;"><span style="font-weight: 400;">Overall, we needed Kubernetes to help us automate the deployments and AWS to provide us the elastic infrastructure required on-demand. Amazon AWS provides a hosted solution for the Kubernetes control plane through its EKS offering which seemed apt to leverage.</span></p>
+<p style="text-align: left;"><span style="font-weight: 400;">To address the elasticity requirements, we picked the Kubernetes cluster autoscaler which is a part of the Kubernetes cluster autoscaler solution.</span></p>
+<h2 style="text-align: left;"><span style="font-weight: 400;">Kubernetes cluster autoscaler</span></h2>
+<p style="text-align: left;"><span style="font-weight: 400;">In K8s, auto scaling can be implemented via a </span><a href="https://kubernetes.io/docs/concepts/architecture/controller/"><span style="font-weight: 400;">controller</span></a><span style="font-weight: 400;"> which manages the number of running objects based on some events. K8s supports various types of cluster autoscalers which can be implemented individually or combined together for a more robust auto scaling solution.</span></p>
+<ul style="text-align: left;">
+<li style="font-weight: 400;"><a href="https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/#algorithm-details"><span style="font-weight: 400;">Horizontal Pod Autoscaler (HPA)</span></a><span style="font-weight: 400;"> &#8211; An algorithm based controller which automatically adjusts the number of replicas in a Deployment, ReplicaSet or Replication Controller based on CPU utilization in the node.</span></li>
+<li style="font-weight: 400;"><a href="https://github.com/kubernetes/community/blob/master/contributors/design-proposals/autoscaling/vertical-pod-autoscaler.md"><span style="font-weight: 400;">Vertical Pod Autoscaler (VPA)</span></a><span style="font-weight: 400;"> &#8211; VPA automatically sets Container resource requirements (CPU and memory) in a Pod and dynamically adjusts them in runtime, based on current resource availability, historical utilization data and real-time events.</span></li>
+<li style="font-weight: 400;"><a href="https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler"><span style="font-weight: 400;">Cluster autoscaler (CA)</span></a><span style="font-weight: 400;"> &#8211; Cluster autoscaler automatically re-sizes the Kubernetes cluster when there are insufficient resources available for new pods expecting to be scheduled or when there are underutilized nodes in the cluster.</span></li>
+</ul>
+<p style="text-align: left;"><span style="font-weight: 400;">For this use case the Kubernetes cluster autoscaler served as a perfect fit. It helped us launch K8s worker nodes on demand and we were able to meet all the constraints which most of our customers have laid out as discussed above. The Kuberentes cluster autoscaler is also supported by many cloud providers including </span><a href="https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/alicloud/README.md"><span style="font-weight: 400;">AliCloud</span></a><span style="font-weight: 400;">, </span><a href="https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/azure/README.md"><span style="font-weight: 400;">Azure</span></a><span style="font-weight: 400;">, </span><a href="https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/aws/README.md"><span style="font-weight: 400;">AWS</span></a><span style="font-weight: 400;">, </span><a href="https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/baiducloud/README.md"><span style="font-weight: 400;">BaiduCloud</span></a><span style="font-weight: 400;"> etc. and we successfully leveraged it for our use case on AWS.</span></p>
+<p style="text-align: left;"><span style="font-weight: 400;">The steps mentioned below will set up a cluster scaler on an EKS based k8s cluster. You will be able to observe your Amazon EKS cluster autoscaling on a need basis.</span></p>
+<h3 style="text-align: left;"><span style="font-weight: 400;">Characteristics of Kubernetes cluster autoscaler</span></h3>
+<ol style="text-align: left;">
+<li style="font-weight: 400;"><span style="font-weight: 400;">The cluster autoscaler only generates events to the ASG. It respects the current minimum and maximum value of ASG that is being targeted and only adjusts the desired capacity. There is no need to explicitly configure the capacities with the cluster autoscaler.</span></li>
+<li style="font-weight: 400;"><span style="font-weight: 400;">The cluster autoscaler drains the worker node before removing it from the cluster. If CA decided to de-provision a node with some pods running on it, they will be rescheduled to another node before draining this node.</span></li>
+<li style="font-weight: 400;"><span style="font-weight: 400;">There is a configurable latency that can be introduced in scale up and scale down of the cluster. For scale up the default value is 10s which allows the CA to ignore unschedulable pods until</span><span style="font-weight: 400;"> they are of a certain age</span><span style="font-weight: 400;">. For scale down default is 10m and this is the duration for which the CA waits before removing that node. These values can be manipulated using appropriate flags.</span></li>
+<li style="font-weight: 400;"><span style="font-weight: 400;">The cluster autoscaler also supports multiple ASGs in a single cluster. You can refer to </span><a href="https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/aws/examples/cluster-autoscaler-multi-asg.yaml"><span style="font-weight: 400;">this</span></a><span style="font-weight: 400;"> link for more information.</span></li>
+</ol>
+<h2 style="text-align: left;"><span style="font-weight: 400;">Acronyms</span></h2>
+<ul style="text-align: left;">
+<li style="font-weight: 400;"><span style="font-weight: 400;">k8s: Kubernetes</span></li>
+<li style="font-weight: 400;"><span style="font-weight: 400;">AWS : Amazon Web Services</span></li>
+<li style="font-weight: 400;"><span style="font-weight: 400;">EKS : Amazon Elastic Kubernetes Service</span></li>
+<li style="font-weight: 400;"><span style="font-weight: 400;">ASG : AWS Auto scaling group</span></li>
+<li style="font-weight: 400;"><span style="font-weight: 400;">CA : Cluster Autoscaler</span></li>
+<li style="font-weight: 400;"><span style="font-weight: 400;">IAM : Identity and Access Management</span></li>
+</ul>
+<h2 style="text-align: left;"><span style="font-weight: 400;">Setting up the Kubernetes cluster autoscaler for EKS</span></h2>
+<p style="text-align: left;"><span style="font-weight: 400;">As a prerequisite, it is assumed that you already have an EKS cluster. If not, you can refer to the documentation </span><a href="https://docs.aws.amazon.com/eks/latest/userguide/create-cluster.html"><span style="font-weight: 400;">here</span></a><span style="font-weight: 400;"> to set up an EKS cluster. In our case, we had an ASG to manage the worker nodes in the cluster. Follow the steps below to set up the Kubernetes cluster autoscaler.</span></p>
+<h3 style="text-align: left;"><span style="font-weight: 400;">Add autoscaling permissions to the K8s worker nodes</span></h3>
+<p style="text-align: left;"><span style="font-weight: 400;">Create a new IAM policy as shown below and attach it to the instance profile role of k8s worker nodes. This policy is attached to the worker nodes because cluster autoscaler may get launched on any one of the worker nodes and it needs access to AWS resources i.e, ASG and EC2 to perform the autoscaling.</span></p>
+<blockquote>
+<pre><em><span style="font-weight: 400;">{</span></em>
+<em><span style="font-weight: 400;">  </span><span style="font-weight: 400; color: #800080;">"Version"</span><span style="font-weight: 400;">: </span><span style="font-weight: 400; color: #008000;">"2012-10-17"</span><span style="font-weight: 400;">,</span></em>
+<em><span style="font-weight: 400;">  </span><span style="font-weight: 400; color: #800080;">"Statement"</span><span style="font-weight: 400;">: [</span></em>
+<em><span style="font-weight: 400;">    {</span></em>
+<em><span style="font-weight: 400; color: #800080;">       "Action"</span><span style="font-weight: 400;">: [</span></em>
+<em><span style="font-weight: 400;">        </span> <span style="font-weight: 400; color: #008000;">"autoscaling:DescribeAutoScalingGroups"</span><span style="font-weight: 400;">,</span></em>
+<em><span style="font-weight: 400;">  </span>  <span style="font-weight: 400;">   </span>  <span style="font-weight: 400; color: #008000;">"autoscaling:DescribeAutoScalingInstances"</span><span style="font-weight: 400;">,</span></em>
+<em><span style="font-weight: 400;">       </span>  <span style="font-weight: 400; color: #008000;">"autoscaling:DescribeLaunchConfigurations"</span><span style="font-weight: 400;">,</span></em>
+<em><span style="font-weight: 400;">       </span>  <span style="font-weight: 400; color: #008000;">"autoscaling:DescribeTags"</span><span style="font-weight: 400;">,</span></em>
+<em><span style="font-weight: 400;">       </span>  <span style="font-weight: 400; color: #008000;">"autoscaling:SetDesiredCapacity"</span><span style="font-weight: 400;">,</span></em>
+<em><span style="font-weight: 400;">       </span>  <span style="font-weight: 400; color: #008000;">"autoscaling:TerminateInstanceInAutoScalingGroup"</span><span style="font-weight: 400;">,</span></em>
+<em><span style="font-weight: 400;">       </span>  <span style="font-weight: 400; color: #008000;">"ec2:DescribeLaunchTemplateVersions"</span></em>
+<em><span style="font-weight: 400;">       ],</span></em>
+<em><span style="font-weight: 400;">       <span style="color: #800080;">"Resource"</span></span><span style="font-weight: 400;">: </span><span style="font-weight: 400; color: #008000;">"*"</span><span style="font-weight: 400;">,</span></em>
+<em><span style="font-weight: 400;">       <span style="color: #800080;">"Effect"</span></span><span style="font-weight: 400;">: </span><span style="font-weight: 400; color: #008000;">"Allow"</span></em>
+<em><span style="font-weight: 400;">    </span><span style="font-weight: 400;">}</span></em>
+<em><span style="font-weight: 400;">  ]</span></em>
+<em><span style="font-weight: 400;">}</span></em></pre>
+</blockquote>
+<h3 style="text-align: left;"><span style="font-weight: 400;">Tag your Worker node’s ASG</span></h3>
+<p style="text-align: left;"><span style="font-weight: 400;">Add the following tags to the k8s worker nodes’ ASG. This </span><span style="font-weight: 400;">will help the cluster autoscaler to auto discover the ASG. Substitute the EKS cluster’s name in the place holder marked as &lt;cluster-name&gt; below. The value of the tags is irrelevant for the functionality.</span></p>
+<blockquote>
+<pre dir="ltr"><span style="color: #800080;">k8s.io/cluster-autoscaler/&lt;cluster-name&gt;</span>: <span style="color: #339966;">owned</span>
+<span style="color: #800080;">k8s.io/cluster-autoscaler/enabled</span>: <span style="color: #339966;">true</span></pre>
+</blockquote>
+<h3 style="text-align: left;"><span style="font-weight: 400;">Deploying the Kubernetes cluster autoscaler</span></h3>
+<p style="text-align: left;"><span style="font-weight: 400;">Fetch the latest cluster-autoscaler deployment spec from </span><a href="https://raw.githubusercontent.com/kubernetes/autoscaler/master/cluster-autoscaler/cloudprovider/aws/examples/cluster-autoscaler-autodiscover.yaml"><span style="font-weight: 400;">this link</span></a><span style="font-weight: 400;">. And edit the downloaded specification file as per the instructions below:</span></p>
+<ol style="text-align: left;">
+<li style="font-weight: 400;"><span style="font-weight: 400;">Set the cluster autoscaler release to the version that matches your cluster&#8217;s Kubernetes major and minor version. If your cluster&#8217;s k8s version is 1.15, find the latest cluster autoscaler version in the </span><a href="https://github.com/kubernetes/autoscaler/releases"><span style="font-weight: 400;">release page</span></a><span style="font-weight: 400;"> that begins with 1.15.</span></li>
+<li style="font-weight: 400;"><span style="font-weight: 400;">The cluster autoscaler provides us a way to ensure that pods with critical functionality do not get disrupted due to the scaling activities. Such pods need to be annotated with the annotation </span><span style="font-weight: 400;">cluster-autoscaler.kubernetes.io/safe-to-evict=&#8221;false&#8221;</span><span style="font-weight: 400;">. cluster autoscaler itself is one such pod with critical functionality and needs to be annotated. Add this under the “annotations” section for the pod.</span></li>
+<li style="font-weight: 400;"><span style="font-weight: 400;">Add the following options to the </span><b>container command</b><span style="font-weight: 400;"> in the specification</span>
+<ul>
+<li style="font-weight: 400;"><span style="font-weight: 400;">&#8211;node-group-auto-discovery=asg:tag=k8s.io/cluster-autoscaler/enabled,k8s.io/cluster-autoscaler/&lt;YOUR CLUSTER NAME&gt;</span>
+<ul>
+<li style="font-weight: 400;">This will enable auto discovery of ASGs having these tags. The value of the tag is irrelevant. Replace &lt;YOUR CLUSTER NAME&gt; with your EKS cluster&#8217;s name.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<ol style="text-align: left;">
+<li style="list-style-type: none;">
+<ul>
+<li style="font-weight: 400;"><span style="font-weight: 400;">&#8211;balance-similar-node-groups</span>
+<ul>
+<li style="font-weight: 400;">In case your EKS cluster has multiple ASGs, we can set this flag to balance the number of instances across all the ASGs providing similar instance types.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<ol style="text-align: left;">
+<li style="list-style-type: none;">
+<ul>
+<li style="font-weight: 400;"><span style="font-weight: 400;">&#8211;skip-nodes-with-system-pods=false</span>
+<ul>
+<li style="font-weight: 400;">By default, cluster autoscaler will not terminate nodes running pods in the kube-system namespace. If you want to override that, you can set the value of this flag to false.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p style="text-align: left;"><span style="font-weight: 400;">If your EKS cluster name is “test-eks-cluster” and your k8s version is 1.15, Your specification should look something like below:</span></p>
+<blockquote>
+<pre><span style="font-weight: 400;"> </span><span style="color: #3366ff;">metadata</span><span style="font-weight: 400;">:</span>
+<span style="font-weight: 400;">   </span><span style="color: #3366ff;">name</span><span style="font-weight: 400;">: <span style="color: #000000;">cluster-autoscaler</span></span>
+<span style="font-weight: 400;">   </span><span style="color: #3366ff;">namespace</span><span style="font-weight: 400;">: <span style="color: #000000;">kube-system</span></span>
+<span style="font-weight: 400;">   </span><span style="color: #3366ff;">annotations</span><span style="font-weight: 400;">:</span>
+<span style="font-weight: 400;">     </span><span style="font-weight: 400;"><span style="color: #3366ff;">cluster-autoscaler.kubernetes.io/safe-to-evict</span>: <span style="color: #339966;">"false"</span></span>
+<span style="font-weight: 400;"> ..</span>
+ <span style="color: #3366ff;">spec</span><span style="font-weight: 400;">:</span>
+<span style="font-weight: 400;"> ..</span>
+<span style="font-weight: 400;"> </span><span style="color: #3366ff;">template</span><span style="font-weight: 400;">:</span>
+<span style="font-weight: 400;">   ..</span>
+<span style="font-weight: 400;">   </span><span style="color: #3366ff;">spec</span><span style="font-weight: 400;">:</span>
+<span style="font-weight: 400;">     </span><span style="color: #3366ff;">serviceAccountName</span><span style="font-weight: 400;">: <span style="color: #000000;">cluster-autoscaler</span></span>
+<span style="font-weight: 400;">     </span><span style="color: #3366ff;">containers</span><span style="font-weight: 400;">:</span>
+<span style="font-weight: 400;">     - </span><span style="color: #3366ff;">image</span><span style="font-weight: 400;">: </span><span style="font-weight: 400; color: #000000;">k8s.gcr.io/cluster-autoscaler:v1.15.6</span>
+<span style="font-weight: 400;">       </span><span style="color: #3366ff;">name</span><span style="font-weight: 400;">: <span style="color: #000000;">cluster-autoscaler</span></span>
+<span style="font-weight: 400;">       </span><span style="color: #3366ff;">resources</span><span style="font-weight: 400;">:</span>
+<span style="font-weight: 400;">         </span><span style="color: #3366ff;">limits</span><span style="font-weight: 400;">:</span>
+<span style="font-weight: 400;">           </span><span style="color: #3366ff;">cpu</span><span style="font-weight: 400;">: <span style="color: #000000;">100m</span></span>
+<span style="font-weight: 400;">           </span><span style="color: #3366ff;">memory</span><span style="font-weight: 400;">: <span style="color: #000000;">300Mi</span></span>
+<span style="font-weight: 400;">         </span><span style="color: #3366ff;">requests</span><span style="font-weight: 400;">:</span>
+<span style="font-weight: 400;">           </span><span style="color: #3366ff;">cpu</span><span style="font-weight: 400;">: <span style="color: #000000;">100m</span></span>
+<span style="font-weight: 400;">           </span><span style="color: #3366ff;">memory</span><span style="font-weight: 400;">: <span style="color: #000000;">300Mi</span></span>
+<span style="font-weight: 400;">       </span><span style="color: #3366ff;">command</span><span style="font-weight: 400;">:</span>
+<span style="font-weight: 400;">         <span style="color: #000000;">- ./cluster-autoscaler</span></span><span style="color: #000000;">
+<span style="font-weight: 400;">         - --v=4</span>
+<span style="font-weight: 400;">         - --stderrthreshold=info</span>
+<span style="font-weight: 400;">         - --cloud-provider=aws</span>
+<span style="font-weight: 400;">         - --skip-nodes-with-local-storage=false</span>
+<span style="font-weight: 400;">         - --expander=least-waste</span>
+<span style="font-weight: 400;">         </span><i><span style="font-weight: 400;">- --node-group-auto-discovery=asg:tag=k8s.io/cluster-autoscaler/enabled,k8s.io/cluster-autoscaler/test-eks-cluster</span></i>
+<span style="font-weight: 400;">         </span><i><span style="font-weight: 400;">- --balance-similar-node-groups</span></i>
+<span style="font-weight: 400;">         </span><i><span style="font-weight: 400;">- --skip-nodes-with-system-pods=false</span></i></span></pre>
+</blockquote>
+<p style="text-align: left;"><span style="font-weight: 400;">Using the kubectl command deploy the cluster autoscaler into your cluster</span></p>
+<blockquote><p><span style="font-weight: 400;">kubectl apply -f cluster-autoscaler-autodiscover.yaml</span></p></blockquote>
+<h2 style="text-align: left;"><span style="font-weight: 400;">Validate the setup</span></h2>
+<p style="text-align: left;"><span style="font-weight: 400;">Assert that the cluster autoscaler pod started successfully.</span></p>
+<blockquote><p><span style="font-weight: 400;">kubectl get po -A | grep cluster-autoscaler</span></p></blockquote>
+<p style="text-align: left;"><span style="font-weight: 400;">The above command should show exactly 1 pod in the kube-system namespace. This pod should be in the “Running” state.</span></p>
+<blockquote><p><span style="font-weight: 400;">kube-system      cluster-autoscaler-fd6db7bf9-q4sk7   1/1 Running 0 3m28s</span></p></blockquote>
+<p style="text-align: left;"><span style="font-weight: 400;">As soon as pod is in running state you can see the cluster autoscaler log using the command:</span></p>
+<blockquote><p><span style="font-weight: 400;">kubectl -n kube-system logs -f deployment.apps/cluster-autoscaler</span></p></blockquote>
+<p style="text-align: left;"><span style="font-weight: 400;">This shows the logs that include startup of cluster autoscaler and memory utilization by each node. Following is an example of memory utilization when the autoscaler starts.</span></p>
+<blockquote>
+<pre><em><span style="font-weight: 400;">I0409 </span><span style="font-weight: 400;">09</span><span style="font-weight: 400;">:</span><span style="font-weight: 400;">31</span><span style="font-weight: 400;">:</span><span style="font-weight: 400;">18</span><span style="font-weight: 400;">.</span><span style="font-weight: 400;">426105       1 </span><span style="font-weight: 400;">static_autoscaler.go:</span><span style="font-weight: 400;">132</span><span style="font-weight: 400;">] Starting main loop
+</span></em><em><span style="font-weight: 400;">I0409 </span><span style="font-weight: 400;">09</span><span style="font-weight: 400;">:</span><span style="font-weight: 400;">31</span><span style="font-weight: 400;">:</span><span style="font-weight: 400;">18</span><span style="font-weight: 400;">.</span><span style="font-weight: 400;">443276       1 </span><span style="font-weight: 400;">utils.go:</span><span style="font-weight: 400;">564</span><span style="font-weight: 400;">] No pod using affinity / antiaffinity found in cluster, disabling affinity predicate for this loop</span></em> <em><span style="font-weight: 400;">….
+</span></em><span style="color: #993300;"><em><b>I0409 09:31:18.501701       1 utils.go:521] Skipping ip-192-168-97-136.ap-south-1.compute.internal - node group min size reached
+</b></em></span><em><b>I0409 09:31:18.501781       1 static_autoscaler.go:370] Scale down status: unneededOnly=false </b><span style="font-weight: 400;">lastScaleUpTime=</span><span style="font-weight: 400;">2020-04-09 08</span><span style="font-weight: 400;">:</span><span style="font-weight: 400;">50</span><span style="font-weight: 400;">:</span><span style="font-weight: 400;">18</span><span style="font-weight: 400;">.</span><span style="font-weight: 400;">045062303 +0000 </span><span style="font-weight: 400;">UTC m=</span><span style="font-weight: 400;">+19</span><span style="font-weight: 400;">.</span><span style="font-weight: 400;">642557212 </span><span style="font-weight: 400;">lastScaleDownDeleteTime=</span><span style="font-weight: 400;">2020-04-09 08</span><span style="font-weight: 400;">:</span><span style="font-weight: 400;">50</span><span style="font-weight: 400;">:</span><span style="font-weight: 400;">18</span><span style="font-weight: 400;">.</span><span style="font-weight: 400;">045062387 +0000 </span><span style="font-weight: 400;">UTC m=</span><span style="font-weight: 400;">+19</span><span style="font-weight: 400;">.</span><span style="font-weight: 400;">642557314 </span><span style="font-weight: 400;">lastScaleDownFailTime=</span><span style="font-weight: 400;">2020-04-09 08</span><span style="font-weight: 400;">:</span><span style="font-weight: 400;">50</span><span style="font-weight: 400;">:</span><span style="font-weight: 400;">18</span><span style="font-weight: 400;">.</span><span style="font-weight: 400;">045062814 +0000 </span><span style="font-weight: 400;">UTC m=</span><span style="font-weight: 400;">+19</span><span style="font-weight: 400;">.</span><span style="font-weight: 400;">642557723 </span><span style="font-weight: 400;">scaleDownForbidden=</span><b>false </b><span style="font-weight: 400;">isDeleteInProgress=</span><b>false
+</b></em><span style="color: #993300;"><em><b>I0409 09:31:18.501806       1 static_autoscaler.go:380] Starting scale down
+</b></em><em><b>I0409 09:31:18.501840       1 scale_down.go:659] No candidates for scale down</b></em></span></pre>
+</blockquote>
+<h2 style="text-align: left;"><span style="font-weight: 400;">Verify the autoscaling</span></h2>
+<p style="text-align: left;"><span style="font-weight: 400;">To test the auto scaling feature, we will launch deployments with some resource constraints and see that when required new nodes get provisioned into the k8s cluster and when under utilized, the nodes get released from the k8s cluster.</span></p>
+<p style="text-align: left;"><span style="font-weight: 400;">Let’s get started with it:</span></p>
+<ul style="text-align: left;">
+<li style="font-weight: 400;"><span style="font-weight: 400;">Fetch a sample nginx deployment config from this </span><a href="https://raw.githubusercontent.com/kubernetes/website/master/content/en/examples/controllers/nginx-deployment.yaml"><span style="font-weight: 400;">link</span></a><span style="font-weight: 400;">.</span></li>
+<li style="font-weight: 400;"><span style="font-weight: 400;">Change the </span><span style="font-weight: 400;">replicas</span><span style="font-weight: 400;"> value to 1</span></li>
+<li style="font-weight: 400;"><span style="font-weight: 400;">Add the cpu and memory limit and request to the deployment. The value should be according to the instance type launched in the ASG. For example, If you launch a t3.medium (2 vCPU, 4 Mem(GiB)) instance following can be your spec.</span></li>
+</ul>
+<blockquote>
+<pre><span style="color: #3366ff;"><b>spec</b></span><span style="font-weight: 400;">:</span>
+<span style="font-weight: 400;"> </span><span style="color: #3366ff;"><b>containers</b></span><span style="font-weight: 400;">:</span>
+<span style="font-weight: 400;">   - </span><span style="color: #3366ff;"><b>name</b></span><span style="font-weight: 400;">: <span style="color: #000000;">nginx</span></span>
+<span style="font-weight: 400;">     </span><span style="color: #3366ff;"><b>image</b></span><span style="font-weight: 400;">: <span style="color: #000000;">nginx:1.14.2</span></span>
+<span style="font-weight: 400;">     </span><span style="color: #3366ff;"><b>resources</b></span><span style="font-weight: 400;">:</span>
+<span style="font-weight: 400;">       </span><span style="color: #3366ff;"><b>limits</b></span><span style="font-weight: 400;">:</span>
+<span style="font-weight: 400;">         </span><span style="color: #3366ff;"><b>cpu</b></span><span style="font-weight: 400;">: <span style="color: #000000;">1500m</span></span>
+<span style="font-weight: 400;">         </span><span style="color: #3366ff;"><b>memory</b></span><span style="font-weight: 400;">: <span style="color: #000000;">2500Mi</span></span>
+<span style="font-weight: 400;">       </span><span style="color: #3366ff;"><b>requests</b></span><span style="font-weight: 400;">:</span>
+<span style="font-weight: 400;">         </span><span style="color: #3366ff;"><b>cpu</b></span><span style="font-weight: 400;">: <span style="color: #000000;">1200m</span></span>
+<span style="font-weight: 400;">         </span><span style="color: #3366ff;"><b>memory</b></span><span style="font-weight: 400;">: <span style="color: #000000;">2500Mi</span></span>
+<span style="font-weight: 400;">     </span><span style="color: #3366ff;"><b>ports</b></span><span style="font-weight: 400;">:</span>
+<span style="font-weight: 400;">       - </span><span style="color: #3366ff;"><b>containerPort</b></span><span style="font-weight: 400;">: <span style="color: #000000;">80</span></span></pre>
+</blockquote>
+<ul style="text-align: left;">
+<li style="font-weight: 400;"><span style="font-weight: 400;">Use kubectl to apply the configuration and launch the deployment.</span></li>
+</ul>
+<blockquote>
+<p style="padding-left: 30px;"><span style="font-weight: 400;">kubectl apply -f nginx.yaml</span></p>
+</blockquote>
+<ul style="text-align: left;">
+<li style="font-weight: 400;"><span style="font-weight: 400;">Check if the cluster upscales. If not, again edit the value of replicas and change it to 2. Use kubectl to apply the configuration.</span></li>
+</ul>
+<blockquote>
+<p style="padding-left: 30px;"><span style="font-weight: 400;">kubectl apply -f nginx.yaml</span></p>
+</blockquote>
+<ul style="text-align: left;">
+<li style="font-weight: 400;"><span style="font-weight: 400;">You will notice that the number of nodes in your cluster increases and you cluster auto scales. You can also see the upscale in the logs. Following is a sample log from our setup.</span></li>
+</ul>
+<blockquote>
+<pre><span style="font-weight: 400;">I0409 12:18:25.015589       1 static_autoscaler.go:132] Starting main loop</span>
+<span style="font-weight: 400;">...</span>
+<span style="color: #993300;"><b>I0409 12:18:25.101631       1 scale_up.go:263] Pod default/nginx-deployment-ff6df446-6m5nw is unschedulable</b></span>
+<span style="font-weight: 400;">I0409 12:18:25.101705       1 scale_up.go:300] Upcoming 0 nodes</span>
+<span style="font-weight: 400;">I0409 12:18:25.101782       1 waste.go:57] Expanding Node Group platform-12-EKSStack-VM8YXAB3PSPQ-EKSWorker-JDRDZZHSQ4DG-NodeAutoScalingGroup-YMZKZ4PATVAN would waste 40.00% CPU, 35.65% Memory, 37.83% Blended</span>
+<span style="font-weight: 400;">I0409 12:18:25.101803       1 scale_up.go:423] Best option to resize: platform-12-EKSStack-VM8YXAB3PSPQ-EKSWorker-JDRDZZHSQ4DG-NodeAutoScalingGroup-YMZKZ4PATVAN</span>
+<span style="font-weight: 400;">I0409 12:18:25.101811       1 scale_up.go:427] Estimated 1 nodes needed in platform-12-EKSStack-VM8YXAB3PSPQ-EKSWorker-JDRDZZHSQ4DG-NodeAutoScalingGroup-YMZKZ4PATVAN</span>
+<span style="color: #993300;"><b>I0409 12:18:25.101829       1 scale_up.go:529] Final scale-up plan: [{platform-12-EKSStack-VM8YXAB3PSPQ-EKSWorker-JDRDZZHSQ4DG-NodeAutoScalingGroup-YMZKZ4PATVAN 1-&gt;2 (max: 100)}]</b>
+<b>I0409 12:18:25.101844       1 scale_up.go:694] Scale-up: setting group platform-12-EKSStack-VM8YXAB3PSPQ-EKSWorker-JDRDZZHSQ4DG-NodeAutoScalingGroup-YMZKZ4PATVAN size to 2</b></span>
+<span style="font-weight: 400;">I0409 12:18:25.101877       1 auto_scaling_groups.go:211] Setting asg platform-12-EKSStack-VM8YXAB3PSPQ-EKSWorker-JDRDZZHSQ4DG-NodeAutoScalingGroup-YMZKZ4PATVAN size to 2</span>
+<span style="font-weight: 400;">I0409 12:18:25.103025       1 factory.go:33] Event(v1.ObjectReference{Kind:"ConfigMap", Namespace:"kube-system", Name:"cluster-autoscaler-status", UID:"d36ebf64-7a3d-11ea-84a8-02afb12a2ce0", APIVersion:"v1", ResourceVersion:"36245", Field</span>
+<span style="font-weight: 400;">Path:""}): type: 'Normal' reason: 'ScaledUpGroup' Scale-up: setting group platform-12-EKSStack-VM8YXAB3PSPQ-EKSWorker-JDRDZZHSQ4DG-NodeAutoScalingGroup-YMZKZ4PATVAN size to 2</span>
+<span style="font-weight: 400;">I0409 12:18:25.242973       1 factory.go:33] Event(v1.ObjectReference{Kind:"ConfigMap", Namespace:"kube-system", Name:"cluster-autoscaler-status", UID:"d36ebf64-7a3d-11ea-84a8-02afb12a2ce0", APIVersion:"v1", ResourceVersion:"36245", Field</span>
+<span style="font-weight: 400;">Path:""}): type: 'Normal' reason: 'ScaledUpGroup' Scale-up: group platform-12-EKSStack-VM8YXAB3PSPQ-EKSWorker-JDRDZZHSQ4DG-NodeAutoScalingGroup-YMZKZ4PATVAN size set to 2</span>
+<span style="color: #993300;"><b>I0409 12:18:25.242999       1 factory.go:33] Event(v1.ObjectReference{Kind:"Pod", Namespace:"default", Name:"nginx-deployment-ff6df446-6m5nw", UID:"330c9154-7a5c-11ea-84a8-02afb12a2ce0", APIVersion:"v1", ResourceVersion:"36267", FieldPath:""}): type: 'Normal' reason: 'TriggeredScaleUp' pod triggered scale-up: [{platform-12-EKSStack-VM8YXAB3PSPQ-EKSWorker-JDRDZZHSQ4DG-NodeAutoScalingGroup-YMZKZ4PATVAN 1-&gt;2 (max: 100)}]</b></span></pre>
+</blockquote>
+<ul style="text-align: left;">
+<li style="font-weight: 400;"><span style="font-weight: 400;">Now wait for sometime and you will see a node is launched</span></li>
+</ul>
+<blockquote>
+<pre><span style="font-weight: 400;">I0409 12:19:55.902030       1 static_autoscaler.go:132] Starting main loop</span>
+<span style="color: #993300;"><b>I0409 12:19:55.908862       1 clusterstate.go:194] Scale up in group platform-12-EKSStack-VM8YXAB3PSPQ-EKSWorker-JDRDZZHSQ4DG-NodeAutoScalingGroup-YMZKZ4PATVAN finished successfully in 1m30.659303454s</b></span>
+<span style="font-weight: 400;">I0409 12:19:55.908911       1 utils.go:564] No pod using affinity / antiaffinity found in cluster, disabling affinity predicate for this loop.</span>
+<span style="font-weight: 400;">...</span>
+<span style="font-weight: 400;">I0409 12:19:55.909015       1 scale_down.go:407] Node ip-192-168-97-136.ap-south-1.compute.internal - utilization 0.805000</span>
+<span style="font-weight: 400;">I0409 12:19:55.909028       1 scale_down.go:411] Node ip-192-168-97-136.ap-south-1.compute.internal is not suitable for removal - utilization too big (0.805000)</span>
+<span style="font-weight: 400;">I0409 12:19:55.909038       1 scale_down.go:407] Node ip-192-168-81-240.ap-south-1.compute.internal - utilization 0.660492</span>
+<span style="font-weight: 400;">I0409 12:19:55.909050       1 scale_down.go:411] Node ip-192-168-81-240.ap-south-1.compute.internal is not suitable for removal - utilization too big (0.660492)</span>
+<span style="font-weight: 400;">I0409 12:19:55.909090       1 static_autoscaler.go:370] Scale down status: unneededOnly=true lastScaleUpTime=2020-04-09 12:18:25.015570456 +0000 UTC m=+12506.613065495 lastScaleDownDeleteTime=2020-04-09 09:50:48.908581166 +0000 UTC m=+365</span>
+<span style="font-weight: 400;">0.506076149 lastScaleDownFailTime=2020-04-09 08:50:18.045062814 +0000 UTC m=+19.642557723 scaleDownForbidden=false isDeleteInProgress=false</span></pre>
+</blockquote>
+<ul style="text-align: left;">
+<li style="font-weight: 400;"><span style="font-weight: 400;">Now again change the replica count to 1 you will see the cluster downscales. If not change the count to 0. Following are the logs for downscale of the system.</span></li>
+</ul>
+<blockquote>
+<pre><span style="font-weight: 400;">1 static_autoscaler.go:132] Starting main loop</span>
+<span style="font-weight: 400;">I0409 12:29:21.635394       1 utils.go:564] No pod using affinity / antiaffinity found in cluster, disabling affinity predicate for this loop</span>
+<span style="font-weight: 400;">...</span>
+<span style="color: #993300;"><b>I0409 12:29:21.635519       1 scale_down.go:407] Node ip-192-168-97-136.ap-south-1.compute.internal - utilization 0.805000</b>
+<b>I0409 12:29:21.635531       1 scale_down.go:411] Node ip-192-168-97-136.ap-south-1.compute.internal is not suitable for removal - utilization too big (0.805000)</b>
+<b>I0409 12:29:21.635541       1 scale_down.go:407] Node ip-192-168-81-240.ap-south-1.compute.internal - utilization 0.055000</b></span>
+<span style="font-weight: 400;">I0409 12:29:21.635635       1 static_autoscaler.go:359] ip-192-168-81-240.ap-south-1.compute.internal is unneeded since 2020-04-09 12:29:21.628614023 +0000 UTC m=+13163.226108967 duration 0s</span>
+<span style="font-weight: 400;">I0409 12:29:21.635650       1 static_autoscaler.go:370] Scale down status: unneededOnly=false lastScaleUpTime=2020-04-09 12:18:25.015570456 +0000 UTC m=+12506.613065495 lastScaleDownDeleteTime=2020-04-09 09:50:48.908581166 +0000 UTC m=+3650.506076149 lastScaleDownFailTime=2020-04-09 08:50:18.045062814 +0000 UTC m=+19.642557723 scaleDownForbidden=false isDeleteInProgress=false</span>
+<span style="font-weight: 400;">I0409 12:29:21.635672       1 static_autoscaler.go:380] Starting scale down</span>
+<span style="color: #993300;"><b>I0409 12:29:21.635696       1 scale_down.go:600] ip-192-168-81-240.ap-south-1.compute.internal was unneeded for 0s</b></span></pre>
+</blockquote>
+<ul style="text-align: left;">
+<li style="font-weight: 400;"><span style="font-weight: 400;">You see here that node utilization of the node decreases and node is eligible for de-provisioning. There is a delay of 10m before the nodes are de-provisioned. Once done you will see the following logs.</span></li>
+</ul>
+<blockquote>
+<pre><span style="font-weight: 400;">I0409 12:39:26.865316       1 utils.go:564] No pod using affinity / antiaffinity found in cluster, disabling affinity predicate for this loop</span>
+<span style="font-weight: 400;">...</span>
+<span style="color: #993300;"><b>I0409 12:39:26.865437       1 scale_down.go:407] Node ip-192-168-81-240.ap-south-1.compute.internal - utilization 0.055000</b>
+<b>I0409 12:39:26.865450       1 scale_down.go:407] Node ip-192-168-97-136.ap-south-1.compute.internal - utilization 0.805000</b></span>
+<span style="font-weight: 400;">I0409 12:39:26.865457       1 scale_down.go:411] Node ip-192-168-97-136.ap-south-1.compute.internal is not suitable for removal - utilization too big (0.805000)</span>
+<span style="color: #993300;"><b>I0409 12:39:26.865528       1 static_autoscaler.go:359] ip-192-168-81-240.ap-south-1.compute.internal is unneeded since 2020-04-09 12:29:21.628614023 +0000 UTC m=+13163.226108967 duration 10m5.229828964s</b></span>
+<span style="font-weight: 400;">...</span>
+<span style="font-weight: 400;">I0409 12:39:26.865553       1 static_autoscaler.go:380] Starting scale down</span>
+<span style="font-weight: 400;">I0409 12:39:26.865580       1 scale_down.go:600] ip-192-168-81-240.ap-south-1.compute.internal was unneeded for 10m5.229828964s</span>
+<span style="color: #993300;"><b>I0409 12:39:26.865639       1 scale_down.go:819] Scale-down: removing empty node ip-192-168-81-240.ap-south-1.compute.internal</b></span>
+<span style="font-weight: 400;">I0409 12:39:26.865997       1 factory.go:33] Event(v1.ObjectReference{Kind:"ConfigMap", Namespace:"kube-system", Name:"cluster-autoscaler-status", UID:"d36ebf64-7a3d-11ea-84a8-02afb12a2ce0", APIVersion:"v1", ResourceVersion:"39753", FieldPath:""}): type: 'Normal' reason: 'ScaleDownEmpty' Scale-down: removing empty node ip-192-168-81-240.ap-south-1.compute.internal</span>
+<span style="font-weight: 400;">I0409 12:39:26.873795       1 delete.go:64] Successfully added toBeDeletedTaint on node ip-192-168-81-240.ap-south-1.compute.internal</span>
+<span style="color: #993300;"><b>I0409 12:39:27.061899       1 auto_scaling_groups.go:269] Terminating EC2 instance: i-0edd1f4f6aa50b615</b></span>
+<span style="font-weight: 400;">I0409 12:39:27.061921       1 aws_manager.go:180] Some ASG instances might have been deleted, forcing ASG list refresh</span>
+<span style="font-weight: 400;">...</span>
+<span style="color: #993300;"><b>I0409 12:39:27.208857       1 factory.go:33] Event(v1.ObjectReference{Kind:"Node", Namespace:"", Name:"ip-192-168-81-240.ap-south-1.compute.internal", UID:"5f017e4b-7a5c-11ea-84a8-02afb12a2ce0", APIVersion:"v1", ResourceVersion:"39777", FieldPath:""}): type: 'Normal' reason: 'ScaleDown' node removed by cluster autoscaler</b>
+<b>I0409 12:39:27.208874       1 factory.go:33] Event(v1.ObjectReference{Kind:"ConfigMap", Namespace:"kube-system", Name:"cluster-autoscaler-status", UID:"d36ebf64-7a3d-11ea-84a8-02afb12a2ce0", APIVersion:"v1", ResourceVersion:"39753", FieldPath:""}): type: 'Normal' reason: 'ScaleDownEmpty' Scale-down: empty node ip-192-168-81-240.ap-south-1.compute.internal removed</b></span></pre>
+</blockquote>
+<h2 style="text-align: left;"><span style="font-weight: 400;">Conclusion</span></h2>
+<p style="text-align: left;"><span style="font-weight: 400;">As we see in this use case, the Kubernetes cluster autoscaler brings together a solution that spans two different ecosystems: the infrastructure and the deployment platform. It connects the k8s scaling events in the deployment platform (k8s) to the controls (such as ASG) in the hosting infrastructure (AWS).</span></p>
+<p style="text-align: left;"><span style="font-weight: 400;">The provisioning, management, capacity controls still lie in the infrastructure layer (AWS). The admins can remain concerned with the infrastructure and specify scaling limits in the infrastructure elements like ASG. The DevOps engineers on the other hand continue to automate deployments and specify resource requirements to trigger scale up or scale down events which still lie in the deployment platform ecosystem.<br />
+</span></p>
+<p style="text-align: left;"><span style="font-weight: 400;">You can also read about our blog on deploying big data stack on Kubernetes <a href="../../devops/big-data-stack-kubernetes/index.html"><span style="font-weight: 400;">here.</span></a></span></p>
+                            </div>
+            
+            
+        </div>
+
+    </article><!-- #post -->
+
+</div>			
+													
+							
+				
+			
+										
+					<div id="related-posts">
+						<h3>Related Posts</h3>
+						<ul>
+													</ul>
+					</div>
+					
+					
+					
+			<div id="comments">
+
+		
+		
+					<!-- If comments are open, but there are no comments. -->
+	
+		 		
+			
+		
+	
+			
+
+	
+</div>			
+				
+				<div id="post-navigation">
+					<a href="../../analytics/traffic-insights-sankey-charts-kibana/index.html" rel="prev"><div class="prev"></div></a>									</div>
+				
+			
+	</div>
+
+	
+</div>
+
+		
+		
+		<div id="copyright" class="clearfix">
+		<div class="container">
+			
+			<div class="sixteen columns">
+
+				<div class="copyright-text copyright-col1">
+											© Cognitree Technologies Pvt Ltd 2022 <br>									</div>
+				
+				<div class="copyright-col2">
+											
+<div class="social-icons clearfix">
+	<ul>
+													<li><a href="https://github.com/cognitree" target="_blank" title="Github"><i class="fa fa-github"></i></a></li>
+											<li><a href="https://www.linkedin.com/company/cognitree" target="_blank" title="LinkedIn"><i class="fa fa-linkedin"></i></a></li>
+																			<li><a href="https://twitter.com/cognitree" target="_blank" title="Twitter"><i class="fa fa-twitter"></i></a></li>
+																			</ul>
+</div>									</div>
+
+			</div>
+			
+		</div>
+	</div><!-- end copyright -->
+			
+	</div><!-- end wrapall / boxed -->
+	
+		<div id="back-to-top"><a href="#"><i class="fa fa-chevron-up"></i></a></div>
+		
+	<script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":["/wp-*.php","/wp-admin/*","/wp-content/uploads/*","/wp-content/*","/wp-content/plugins/*","/wp-content/themes/unicon/*","/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
+</script>
+
+
+
+
+
+
+
+<script src="../../wp-content/cache/minify/2a0ec.js"></script>
+
+
+
+
+	<script type="text/javascript">
+	jQuery(document).ready(function($){
+		"use strict";
+	    
+		/* PrettyPhoto Options */
+		var lightboxArgs = {			
+						animation_speed: 'fast',
+						overlay_gallery: false,
+			autoplay_slideshow: false,
+						slideshow: 5000,
+									opacity: 0.8,
+						show_title: false,
+			social_tools: "",			deeplinking: false,
+			allow_resize: true,
+			allow_expand: false,
+			counter_separator_label: '/',
+			default_width: 1160,
+			default_height: 653
+		};
+		
+				/* Automatic Lightbox */
+		$('a[href$=jpg], a[href$=JPG], a[href$=jpeg], a[href$=JPEG], a[href$=png], a[href$=gif], a[href$=bmp]:has(img)').prettyPhoto(lightboxArgs);
+					
+		/* General Lightbox */
+		$('a[class^="prettyPhoto"], a[rel^="prettyPhoto"], .prettyPhoto').prettyPhoto(lightboxArgs);
+
+		/* WooCommerce Lightbox */
+		$("a[data-rel^='prettyPhoto']").prettyPhoto({
+			hook: 'data-rel',
+			social_tools: false,
+			deeplinking: false,
+			overlay_gallery: false,
+			opacity: 0.8,
+			allow_expand: false, /* Allow the user to expand a resized image. true/false */
+			show_title: false
+		});
+
+		
+	    
+		/* Transparent Header */
+	    function transparentHeader() {
+			if ($(document).scrollTop() >= 60) {
+				$('#header.header-v1').removeClass('header-transparent');
+			}
+			else {
+				$('#header.header-v1.stuck').addClass('header-transparent');
+			}
+		}
+			
+		/* Sticky Header */
+		if (/Android|BlackBerry|iPhone|iPad|iPod|webOS/i.test(navigator.userAgent) === false) {
+
+			var $stickyHeaders = $('#header.header-v1, #header.header-v3 .navigation-wrap, #header.header-v4 .navigation-wrap');
+			$stickyHeaders.waypoint('sticky');
+			
+			$(window).resize(function() {
+				$stickyHeaders.waypoint('unsticky');
+				if ($(window).width() < 944) {
+					$stickyHeaders.waypoint('unsticky');
+				}
+				else {
+					$stickyHeaders.waypoint('sticky');
+				}
+			});
+			
+			if ($("body").hasClass("header-is-transparent")) {
+				$(document).scroll(function() { transparentHeader(); });
+				transparentHeader();
+		    }
+
+		}			
+	    
+	    
+	    	
+	    /* Fill rest of page */
+	    			    			$('body').css({'background-color' : '#ffffff' });
+	    			    
+	});
+	</script>
+	
+<script>function w3tc_ll_observe(ll){if(!ll||!ll.update)return;var t;new MutationObserver(function(){clearTimeout(t);t=setTimeout(function(){ll.update();},200);}).observe(document.documentElement,{childList:true,subtree:true});}window.addEventListener("LazyLoad::Initialized",function(e){setTimeout(function(){window.w3tc_lazyload=e.detail.instance;w3tc_ll_observe(window.w3tc_lazyload);},1);});window.w3tc_lazyload=1,window.lazyLoadOptions={elements_selector:".lazy",callback_loaded:function(t){var e;try{e=new CustomEvent("w3tc_lazyload_loaded",{detail:{e:t}})}catch(a){(e=document.createEvent("CustomEvent")).initCustomEvent("w3tc_lazyload_loaded",!1,!1,{e:t})}window.dispatchEvent(e)}}</script><script src="../../wp-content/cache/minify/f4bea.js" async></script>
+
+
+</html>
+<!--
+Performance optimized by W3 Total Cache. Learn more: https://www.boldgrid.com/w3-total-cache/?utm_source=w3tc&utm_medium=footer_comment&utm_campaign=free_plugin
+
+Page Caching using Disk: Enhanced 
+Lazy Loading
+Minified using Disk
+Database Caching 51/81 queries in 0.172 seconds using Disk
+
+Served from: localhost @ 2026-09-18 15:49:13 by W3 Total Cache
+-->
